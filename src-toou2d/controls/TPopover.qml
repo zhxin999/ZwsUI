@@ -78,8 +78,13 @@ TPopup{
 
     Connections{
         target: _root_window_;
-        onWidthChanged:close();
-        onHeightChanged:close();
+        function onWidthChanged(){
+            close()
+        }
+        function onHeightChanged()
+        {
+            close();
+        }
     }
 
     TGadgetBackground{

@@ -71,11 +71,3 @@ contains(QMAKE_HOST.os,Windows) {
 }else{
     include(./build_macos.pri)
 }
-
-message("-----------------------------")
-message("Toou 技术交流QQ群:244808")
-message("http://www.toou.net")
-message("1. 构建")
-message("2. 运行")
-message("先构建再运行，人生路必定赢")
-message("-----------------------------")

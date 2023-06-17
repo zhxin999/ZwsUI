@@ -132,7 +132,7 @@ Item {
 
     Connections{
         target: toou2d_scrollbarv.target;
-        onContentXChanged:{
+        function onContentXChanged(){
             if(!mouseArea.ishold){
                 var t = toou2d_scrollbarv.target;
                 var p = t.contentX / (t.contentWidth - t.width);
@@ -142,7 +142,7 @@ Item {
             mprivate.restoreVisibleState();
         }
 
-        onContentWidthChanged:{
+        function onContentWidthChanged(){
             var t  = toou2d_scrollbarv.target;
             var nh = t.width / t.contentWidth * toou2d_scrollbarv.width;
             if(nh > thumbMinWidth){
@@ -152,7 +152,10 @@ Item {
             mprivate.checkVisible();
         }
 
-        onWidthChanged:mprivate.checkVisible();
+        function onWidthChanged()
+        {
+            mprivate.checkVisible();
+        }
     }
 
     TObject{
