@@ -1,6 +1,9 @@
 pragma Singleton
 import QtQuick 2.6
-import Toou2D 1.0
+import QtQml 2.2
+import QtQuick.Layouts 1.3
+
+//import Toou2D 1.0
 
 /*!
     \qmltype TToast
@@ -163,84 +166,65 @@ TObject {
         }
 
         // -- Toou2D TMessage style
-        property Component toou2d_sytle:  TRectangle{
+        property Component toou2d_sytle:  Rectangle{
             id:rect;
-            width:  rowlayout.width  + (_super.moremsg ? 25 : 80);
+            width:  rowlayout.width  + (_super.moremsg ? 25 : 25);
             height: rowlayout.height + 20;
             color: {
                 switch(_super.type){
-                    case mcontrol.const_success: return "#F0F9EB";
-                    case mcontrol.const_warning: return "#FDF6ED";
-                    case mcontrol.const_info:    return "#EDF2FC";
-                    case mcontrol.const_error:   return "#FEF0F0";
+                    case mcontrol.const_success: return "#28a745";
+                    case mcontrol.const_warning: return "#ffc107";
+                    case mcontrol.const_info:    return "#17a2b8";
+                    case mcontrol.const_error:   return "#dc3545";
                 }
                 return "#FFFFFF"
             }
             radius: 4;
             border.width: 1;
-            border.color: Qt.lighter(ticon.color,1.2);
+            border.color: "#A0A0A0"
+            //border.color: Qt.lighter(ticon.color,1.2);
 
-            theme.parent: mtheme;
-            theme.groupName: _super.type;
-            theme.childName: "bg"
+            //theme.parent: mtheme;
+            //theme.groupName: _super.type;
+            //theme.childName: "bg"
 
             Row{
                 id:rowlayout
                 x:20;
                 y:(parent.height - height) / 2;
                 spacing: 10
-                TSVGIcon{
-                    id:ticon
-                    theme.parent: mtheme;
-                    theme.groupName: rect.theme.groupName;
-                    theme.childName: "content";
 
-                    anchors.verticalCenter: parent.verticalCenter;
-                    source:{
-                        switch(_super.type){
-                            case mcontrol.const_success: return "qrc:/net.toou.2d/resource/svg/success.svg";
-                            case mcontrol.const_warning: return "qrc:/net.toou.2d/resource/svg/warning.svg";
-                            case mcontrol.const_info:    return "qrc:/net.toou.2d/resource/svg/info.svg";
-                            case mcontrol.const_error:   return "qrc:/net.toou.2d/resource/svg/error.svg";
-                        }
-                        return "#FFFFFF"
-                    }
-
-                    width:  more.visible ? 40 : 22;
-                    height: more.visible ? 40 : 22;
-
-                    color: {
-                        switch(_super.type){
-                            case mcontrol.const_success: return "#6AC044";
-                            case mcontrol.const_warning: return "#E4A147";
-                            case mcontrol.const_info:    return "#909399";
-                            case mcontrol.const_error:   return "#F36D6F";
-                        }
-                        return "#FFFFFF"
-                    }
-                }
-
-                Column{
+                ColumnLayout{
+                    //anchors.fill: parent
+                    width: mcontrol.width
+                    anchors.rightMargin: 20
                     spacing: 5;
-                    TLabel{
-                        theme.parent: mtheme;
-                        theme.groupName: rect.theme.groupName;
-
+                    Text{
+                        //theme.parent: mtheme;
+                        //theme.groupName: rect.theme.groupName;
+                        //width: mcontrol.maxWidth - 100
+                        //anchors.leftMargin: 20
+                        //anchors.rightMargin: 20
+                        rightPadding: 20
+                        Layout.fillWidth: true
+                        horizontalAlignment:Text.AlignHCenter
                         font.bold:more.visible
-                        font.pixelSize: 20;
+                        font.pixelSize: 18;
                         text: _super.text
-                        color: ticon.color;
+                        color: _super.type===mcontrol.const_warning?"#000000":"#FFFFFF";
                     }
 
-                    TLabel{
+                    Text{
                         id:more
-                        theme.parent: mtheme;
-                        theme.groupName: rect.theme.groupName;
+                        Layout.fillWidth: true
+                        //theme.parent: mtheme;
+                        //theme.groupName: rect.theme.groupName;
 
-                        color:    ticon.color;
+                        color:    _super.type===mcontrol.const_warning?"#000000":"#FFFFFF";
                         text:    _super.moremsg;
                         visible: _super.moremsg;
                         wrapMode : Text.WordWrap
+                        horizontalAlignment:Text.AlignHCenter
 
                         onContentWidthChanged: {
                             width = contentWidth < mcontrol.maxWidth - 100 ? 220 : mcontrol.maxWidth;
@@ -249,29 +233,15 @@ TObject {
                 }
             }
 
-            TIconButton{
-                theme.parent: mtheme;
-                theme.childName: "btn.close"
-                icon.width:  12;
-                icon.height: 12;
-                y:4; x:parent.width - width
-                icon.type: TIconType.SVG;
-                icon.position: TPosition.Only;
-                icon.source: "qrc:/net.toou.2d/resource/svg/close-px.svg"
-                icon.color:"#ADADAD";
-                backgroundComponent: null;
-                onClicked: _super.close();
-            }
-
         }
         //style....end
     }
 
-    TThemeBinder{
+    /*TThemeBinder{
         id:mtheme;
         className: "TToast"
 
         Component.onCompleted: initialize();
-    }
+    }*/
 
 }
